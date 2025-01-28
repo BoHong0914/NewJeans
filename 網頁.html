@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NewJeans Chat</title>
+  <style>
+    body {
+      font-family: 'Microsoft YaHei', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .side-image {
+      position: fixed;
+      top: 0;
+      width: 15vw;
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
+      z-index: -1;
+    }
+
+    .left-image {
+      left: 5px;
+      top: 0;
+      background-image: url('https://i.imgur.com/E0TLKSn.jpeg');
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: fixed;
+      width: 28vw;
+      height: 100vh;
+      z-index: -1;
+    }
+
+    .right-image {
+      right: 5px;
+      top: 0;
+      background-image: url('https://i.imgur.com/w8gpBlL.jpeg');
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: fixed;
+      width: 28vw;
+      height: 101vh;
+      z-index: -1;
+    }
+
+    h1 {
+      font-size: 2.2em;
+      margin-bottom: 0;
+      font-family: 'Microsoft YaHei', sans-serif;
+      position: relative;
+      top: -10px;
+      width: 100vw;
+      text-align: center;
+      letter-spacing: -0.1em;
+    }
+
+    h1 .n { color: black; } 
+    h1 .J { color: #00bcd4; } 
+    h1 .e { color: #f06292; } 
+    h1 .a { color: #66bb6a; } 
+    h1 .n2 { color: #efdb25; } 
+    h1 .s { color: #9c27b0; }
+
+    h1 .new-spacing {
+      letter-spacing: 0.01em;
+    }
+
+    h1 .jeans-spacing {
+      letter-spacing: 0.01em;
+    }
+
+    h1 .never-dies {
+      letter-spacing: 0.01em;
+      color: black;
+    }
+
+    .chat-box {
+      width: 40vw;
+      height: 83vh;
+      border-radius: 30px;
+      padding: 20px;
+      background: linear-gradient(to bottom, #fff9c4, #ffffff, #ffeb3b);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      overflow-y: auto;
+      margin-bottom: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      border: 4px solid #333;
+      position: relative;
+    }
+
+    .message {
+      padding: 10px 16px;
+      border-radius: 30px;
+      max-width: 60%;
+      word-wrap: break-word;
+      font-size: 14px;
+      line-height: 1.4;
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .user-message {
+      background-color: #00bcd4;
+      color: white;
+      align-self: flex-end;
+      border-radius: 30px;
+      display: inline-block;
+      padding-left: 10px;
+    }
+
+    .bot-response {
+      background-color: #e0e0e0;
+      color: #333;
+      align-self: flex-start;
+      border-radius: 30px;
+      display: inline-block;
+      padding-left: 10px;
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+      position: relative;
+      padding-right: 30px;
+    }
+
+    .bot-message-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .bot-message-container img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 10px;
+      z-index: 1;
+    }
+
+    .bot-message-container::after {
+      content: "";
+      position: absolute;
+      top: 18px;
+      left: -20px;
+      width: 15px;
+      height: 15px;
+      background-color: #e0e0e0;
+      border-radius: 50%;
+      border: 5px solid #e0e0e0;
+      z-index: -1;
+    }
+
+    .input-container {
+      width: 40vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: white;
+      border-radius: 20px;
+      padding: 10px;
+      position: relative;
+      top: -77px;
+    }
+
+    .input-container:before {
+      content: "";
+      position: absolute;
+      top: -8px;
+      left: -12px;
+      width: 42.76vw;
+      height: 3px;
+      background-color: black;
+    }
+
+    input[type="text"] {
+      width: 90%;
+      padding: 12px;
+      font-size: 14px;
+      border-radius: 8px;
+      border: 2px solid #ccc;
+      outline: none;
+      background-color: white;
+      transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      border: 2px solid #00bcd4;
+    }
+
+    button {
+      background-color: transparent;
+      border: none;
+      width: 0;
+      height: 0;
+      border-left: 24px solid #00bcd4;
+      border-top: 12px solid transparent;
+      border-bottom: 12px solid transparent;
+      cursor: pointer;
+      position: relative;
+      left: 8px;
+    }
+
+    button:hover {
+      border-left-color: #008c9e;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="side-image left-image"></div>
+  <div class="side-image right-image"></div>
+
+  <h1>
+    <span class="n new-spacing">New</span>
+    <span class="J">J</span>
+    <span class="e">e</span>
+    <span class="a">a</span>
+    <span class="n2">n</span>
+    <span class="s">s</span>&nbsp;
+    <span class="never-dies">never dies</span>
+  </h1>
+
+  <div class="chat-box" id="chatBox">
+    <!-- 聊天內容區域 -->
+  </div>
+
+  <div class="input-container">
+    <input type="text" id="userInput" placeholder="Enter a message." onkeydown="handleKeyDown(event)" />
+    <button onclick="sendMessage()"></button>
+  </div>
+
+  <script>
+    function sendMessage() {
+  const input = document.getElementById('userInput');
+  const message = input.value.trim();
+
+  if (message !== '') {
+    // 顯示使用者訊息
+    const userMessage = document.createElement('div');
+    userMessage.classList.add('message', 'user-message');
+    userMessage.textContent = message;
+    document.getElementById('chatBox').appendChild(userMessage);
+
+    input.value = ''; // 清空輸入框
+
+    // 根據使用者的輸入設置機器人回應
+    let botResponse = '';
+
+    // 加入大小寫不敏感的判斷
+    if (message.toLowerCase().includes('你好') || message.toLowerCase().includes('妳好') || message.toLowerCase().includes('嗨')) {
+      botResponse = '你好呀！我是Hanni🍞~';
+    } else if (message.toLowerCase().includes('newjeans')) {
+      botResponse = 'NewJeans是一個超棒的女團！你喜歡他們的哪首歌呢？';
+    } else if (message.includes('妳可以推薦一首歌給我嗎')) {
+      botResponse = '當然可以! 我推薦這首歌給你！';
+
+      setTimeout(() => {
+        addBotMessage(botResponse);
+      }, 1000);
+
+      setTimeout(() => {
+        addBotMessage(`<iframe width="320" height="180" src="https://www.youtube.com/embed/ZIyLmfF2PMY?si=R9C4ExPMSGP9a0X8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`);
+      }, 2000);
+      
+      return; // 避免重複顯示回應
+    } else if (message.toLowerCase().includes('妳喜歡玩偶嗎?')) {
+      botResponse = '我最喜歡獨角豬(學名:Unicorn Pig)';
+    } else {
+      botResponse = '謝謝你的訊息！還有其他問題嗎？';
+    }
+
+    // 顯示機器人訊息
+    setTimeout(() => {
+      addBotMessage(botResponse);
+    }, 1000);
+  }
+}
+
+function addBotMessage(text) {
+  const botMessageContainer = document.createElement('div');
+  botMessageContainer.classList.add('bot-message-container');
+
+  const botImg = document.createElement('img');
+  botImg.src = 'https://i.imgur.com/jMMzkqG.jpeg'; // 機器人頭貼圖片
+
+  const botMessage = document.createElement('div');
+  botMessage.classList.add('message', 'bot-response');
+  botMessage.innerHTML = text; // 解析 HTML 內容
+
+  botMessageContainer.appendChild(botImg);
+  botMessageContainer.appendChild(botMessage);
+  document.getElementById('chatBox').appendChild(botMessageContainer);
+
+  // 自動滾動到底部
+  document.getElementById('chatBox').scrollTop = document.getElementById('chatBox').scrollHeight;
+}
+
+function handleKeyDown(event) {
+  if (event.key === 'Enter') {
+    sendMessage(); // 按下 Enter 時發送訊息
+  }
+}
+
+  </script>
+
+</body>
+</html>
